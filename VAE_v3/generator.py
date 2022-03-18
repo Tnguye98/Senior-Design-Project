@@ -1,34 +1,23 @@
-# generator.py
-# 
-# This file is used to generate unique imagery from a trained vae mode
-# 	It is required to run vae.py before this program can be used
-#
-
-# Dependancies
 import numpy as np
 import tensorflow as tf
-from tensorflow import keras
-from tensorflow.keras import layers
-from keras import backend as K
+import matplotlib.pyplot as plt
 import sys
 import pickle
 import os
 import random
 
-import matplotlib.pyplot as plt
 
+from tensorflow import keras
+from tensorflow.keras import layers
+from keras import backend as K
 from mpl_toolkits.axes_grid1 import ImageGrid
 
 
-
-#Data Builder File: ./data_builder.py
-import data_builder as datab
-
-#Data Pipeline for FMOW dataset: ./pipeline.py
+# Data Pipeline for FMOW dataset: ./pipeline.py
 from pipeline import load_im, load_manifest, load_manifest_count, load_manifest_rand
 
 
-#MNIST
+# MNIST
 from keras.datasets import mnist
 
 #Image Processing
@@ -154,6 +143,6 @@ for i in range(0, total_plot, 3):
 	grid[0].imshow(gen_im[0], cmap = plt.cm.binary)
 
 
-#Output image data here
-#plt.show()
+# Output image data here
+# plt.show()
 fig.savefig("GenImages.png")
