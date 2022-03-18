@@ -43,18 +43,10 @@ from tensorflow.keras import layers
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import ImageGrid
 
-# Data Builder File: ./data_builder.py - No longer in use
-# import data_builder as datab
-
 # Data Pipeline for FMOW dataset: ./pipeline.py
 # from pipeline import load_im, load_manifest, load_manifest_count, load_manifest_rand
 from pipeline import load_manifest, load_manifest_count, load_manifest_rand
 # removed the load_im import due to it being depreciated and not used in code anymore
-
-# MNIST
-# NOTE: MNIST usage is depreciated. Do not use
-# from keras.datasets import mnist
-
 
 # CIFAR10 Filename List for importer
 # NOTE: Depreciated

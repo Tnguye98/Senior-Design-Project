@@ -31,16 +31,6 @@ def genRandData(size):
 	o = g1.normal(shape=[1,size])
 	return o
 
-# Loads a locally specified file
-# Not in use/depreciated
-def loadLocal():
-	l = []
-	pim = Image.open("inf.jpg")
-	pim_np = np.asarray(pim)
-	pim_np = pim_np/255.
-	l.append(pim_np)
-	return np.asarray(l)
-
 # Takes a base image and converts to the latent space. Then performs an add operation with a random normal distribution and reconstructs
 # encoder : encoder model
 # decoder : decoder model

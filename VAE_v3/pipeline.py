@@ -10,7 +10,6 @@
 #	load_manifest - Loads all images from a manifest
 #	load_manifest_count - Loads a set number of images in a deterministic way from a manifest
 #	load_manifest_rand - Loads a set number of images randomly from a manifest
-#
 
 
 # Necessary Imports
@@ -35,8 +34,6 @@ def load_manifest(manifest, dim):
         # FIXME: Manifest likely shouldn't include this in the first place?
         if obj == "":
             continue
-        # Debug Print
-        # print("Loading: " + obj)
         im = Image.open(obj)
         im_np = np.asarray(im)
 
