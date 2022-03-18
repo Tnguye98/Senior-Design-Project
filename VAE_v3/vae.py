@@ -1,27 +1,26 @@
-'''
-vae.py
+# vae.py
+#
+# This file is the primary training file for the VAE.
+# Training will fail unless a proper manifest is provided and the 'model' folder exists in the base directory
+#
+# File Usage:
+#	python vae.py [args]
+#
+#	Command Line Arguments:
+#	--load [int]	| Load checkpoint model and start at specified epoch
+#	-l [int]		| Alias for --load
+#	--arch			| Shown model architecture only, do not execute
+#	-a 				| Alias for --arch
+#
+# File Configuraion:
+#	To properly configure this file, you may edit the configuration and constants values
+#	These variables can be found under the following sections:
+#		CONFIGURATION VARIABLES 	- Line 70
+#		CONSTANTS CONFIGURATION 	- Line 90
 
-This file is the primary training file for the VAE.
-Training will fail unless a proper manifest is provided and the 'model' folder exists in the base directory
-
-File Usage:
-	python vae.py [args]
-
-	Command Line Arguments:
-	--load [int]	| Load checkpoint model and start at specified epoch
-	-l [int]		| Alias for --load
-	--arch			| Shown model architecture only, do not execute
-	-a 				| Alias for --arch
-
-File Configuraion:
-	To properly configure this file, you may edit the configuration and constants values
-	These variables can be found under the following sections:
-		CONFIGURATION VARIABLES 	- Line 70
-		CONSTANTS CONFIGURATION 	- Line 90
-'''
 import sys
 
-
+# import pickle
 # pickle will be used to covert object hierarchy to a byte stream or vice versa, known as serialization
 # Not used in the program. Why is this in here? Future use?
 
@@ -44,10 +43,18 @@ from tensorflow.keras import layers
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import ImageGrid
 
+# Data Builder File: ./data_builder.py - No longer in use
+# import data_builder as datab
+
 # Data Pipeline for FMOW dataset: ./pipeline.py
 # from pipeline import load_im, load_manifest, load_manifest_count, load_manifest_rand
 from pipeline import load_manifest, load_manifest_count, load_manifest_rand
 # removed the load_im import due to it being depreciated and not used in code anymore
+
+# MNIST
+# NOTE: MNIST usage is depreciated. Do not use
+# from keras.datasets import mnist
+
 
 # CIFAR10 Filename List for importer
 # NOTE: Depreciated
