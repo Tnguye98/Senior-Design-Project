@@ -20,7 +20,7 @@
 
 import sys
 
-# import pickle
+
 # pickle will be used to covert object hierarchy to a byte stream or vice versa, known as serialization
 # Not used in the program. Why is this in here? Future use?
 
