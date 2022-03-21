@@ -28,7 +28,20 @@ import sys
 import gc
 
 from mpl_toolkits.axes_grid1 import ImageGrid
+from pipeline import load_manifest, load_manifest_count, load_manifest_rand
 
+# Configuration Variables
+number_of_pics = 10
+max_epochs = 10000
+num_rows_plots = 20
+traing_mf_name = "train.manifest"
+validation_mf_name = "val.manifest"
+
+# Constants Configuration
+LATENT_DIM = 512
+HIDDEN_LAYER_DIM = 2048
+IMAGE_DIMENSIONS = (512, 512)
+input_shape = IMAGE_DIMENSIONS + (3,)
 
 
 
