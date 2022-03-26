@@ -25,8 +25,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 import gc
+import os
+
 from mpl_toolkits.axes_grid1 import ImageGrid
 from pipeline import load_manifest, load_manifest_count, load_manifest_rand
+from tensorflow import keras
+from tensorflow.keras import layers
 
 
 
@@ -59,6 +63,11 @@ if (len(sys.argv) > 1):
 		start_at_epoch = int(sys.argv[2])
 		print("Restarting Model at Epoch: " + str(start_at_epoch))
 
+# Sampling function
+def sampling(args):
+	z_mean, z_log_var = args
+	epsilon = tf.random.normal(shape = (tf.shape(z_mean)[0], LATENT_DIM), mean =0, stddev = 1.0)
+	return z_mean + tf.math.exp(z_log_var) * epsilson
 
 
 
