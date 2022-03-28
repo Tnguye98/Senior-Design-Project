@@ -67,7 +67,42 @@ if (len(sys.argv) > 1):
 def sampling(args):
 	z_mean, z_log_var = args
 	epsilon = tf.random.normal(shape = (tf.shape(z_mean)[0], LATENT_DIM), mean =0, stddev = 1.0)
-	return z_mean + tf.math.exp(z_log_var) * epsilson
+	return z_mean + tf.math.exp(z_log_var) * epsilon
+
+# Encoder 
+# Task make this shorter by importing layers
+# Check what dataset we are using and if it needs to be normalized
+inputs = tf.keras.layers.Input(shape = input_shape, name = "encoder_input")
+
+x = tf.keras.layers.Conv2D(filters = 3, kernel_size = (4, 4), padding = 'same', activation = 'relu', name = 'RGB_Layer')(inputs)
+x = tf.keras.layers.Conv2D(filters = 32, kernel_size = (4, 4), padding = 'same', activation = 'relu', strides = (4, 4), name = 'Conv_Layer_1')(x)
+x = tf.keras.layers.MaxPooling2D(pool_size = (2, 2), padding = 'same', name = 'Pooling_Layer_1')(x)
+x = tf.keras.layers.Conv2D(filters = 64, kernel_size = (4, 4), padding = 'same', activation = 'relu', strides = 1, name = 'Conv_Layer_2')(x)
+x = tf.keras.layers.MaxPooling2D(pool_size = (2, 2), padding = 'same', name = 'Pooling_Layer_2')(x)
+x = tf.keras.layers.Conv2D(filters = 64, kernel_size = 1, padding = 'same', activation = 'relu', strides = 1, name = 'Conv_Layer_3')(x)
+x = tf.keras.layers.Flatten(name = 'Flatten_Layer')(x)
+x = tf.keras.layers.Dense(units = HIDDEN_LAYER_DIM, name = 'Hidden_Layer')(x)
+
+z_mean = tf.keras.layers.Dense(units = LATENT_DIM, name = 'Z_MEAN')(x)
+z_log_var = tf.keras.layers.Dense(units = LATENT_DIM, name = 'Z_LOG_VAR')(x)
+
+outputs = tf.keras.layers.Lambda(sampling, output_shape = (LATENT_DIM, ), name = 'Latent_Space')([z_mean, z_log_var])
+encoder = tf.keras.Model(inputs, outputs, name = 'encoder')
+
+encoder.summary()
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
