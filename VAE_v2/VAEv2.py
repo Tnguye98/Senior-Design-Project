@@ -86,18 +86,25 @@ x = tf.keras.layers.Dense(units = HIDDEN_LAYER_DIM, name = 'Hidden_Layer')(x)
 z_mean = tf.keras.layers.Dense(units = LATENT_DIM, name = 'Z_MEAN')(x)
 z_log_var = tf.keras.layers.Dense(units = LATENT_DIM, name = 'Z_LOG_VAR')(x)
 
-outputs = tf.keras.layers.Lambda(sampling, output_shape = (LATENT_DIM, ), name = 'Latent_Space')([z_mean, z_log_var])
-encoder = tf.keras.Model(inputs, outputs, name = 'encoder')
-
+outputs = tf.keras.layers.Lambda(function = sampling, output_shape = (LATENT_DIM, ), name = 'Latent_Space')([z_mean, z_log_var])
+encoder = tf.keras.Model(inputs = inputs, outputs = outputs, name = 'encoder')
 encoder.summary()
 
+# Decoder
+inputs = tf.keras.Input(shape = (LATENT_DIM,))
 
+x = tf.keras.layers.Dense(units = HIDDEN_LAYER_DIM, name = 'Hidden_Layer')(inputs)
+x = tf.keras.layers.Dense(units = 65536, name = 'Upscale_Layer')(x)
+x = tf.keras.layers.Reshape((32, 32, 64))(x)
+x = tf.keras.layers.Conv2DTranspose(filters = 64, kernel_size = 1, padding = 'same', strides = 1, activation = 'relu', name = 'TP_Layer_3')(x)
+x = tf.keras.layers.UpSampling2D(size = (2, 2), name = 'UpSample_Layer_2')(x)
+x = tf.keras.layers.Conv2DTranspose(filters = 64, kernel_size = (4, 4), padding = 'same', strides = 1, activation = 'relu', name = 'TP_Layer_2')(x)
+x = tf.keras.layers.UpSampling2D(size = (2, 2), name = 'UpSample_Layer_1')(x)
+x = tf.keras.layers.Conv2DTranspose(filters = 32, kernel_size = (4, 4), padding = 'same', activation = 'sigmoid', name = 'TP_Layer_1')(x)
 
-
-
-
-
-
+outputs = tf.keras.layers.Conv2D(filters = 3, kernel_size = (4, 4), padding = 'same', activation = 'sigmoid', name = 'Transpose_RGB_Layer')(x)
+decoder = tf.keras.Model(inputs = inputs, outputs = outputs, name = 'decoder')
+decoder.summary()
 
 
 
