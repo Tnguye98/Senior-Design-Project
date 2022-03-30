@@ -88,7 +88,7 @@ z_log_var = tf.keras.layers.Dense(units = LATENT_DIM, name = 'Z_LOG_VAR')(x)
 
 encoder_outputs = tf.keras.layers.Lambda(function = sampling, output_shape = (LATENT_DIM, ), name = 'Latent_Space')([z_mean, z_log_var])
 encoder = tf.keras.Model(inputs = encoder_input, outputs = encoder_outputs, name = 'encoder')
-encoder.summary()
+# encoder.summary()
 
 # Decoder
 decoder_inputs = tf.keras.Input(shape = (LATENT_DIM,))
@@ -104,20 +104,48 @@ x = tf.keras.layers.Conv2DTranspose(filters = 32, kernel_size = (4, 4), padding 
 
 decoder_outputs = tf.keras.layers.Conv2D(filters = 3, kernel_size = (4, 4), padding = 'same', activation = 'sigmoid', name = 'Transpose_RGB_Layer')(x)
 decoder = tf.keras.Model(inputs = decoder_inputs, outputs = decoder_outputs, name = 'decoder')
-decoder.summary()
+# decoder.summary()
 
 # Model Compilation
-
 z = encoder(encoder_input)
 outputs = decoder(z)
 
 VAE = tf.keras.Model(inputs = encoder_input, outputs = outputs, name = "VAE")
-VAE.summary()
+# VAE.summary()
+
+if architecture_only:
+	exit()
+
+base_truth = tf.reshape(encoder_input, [-1])
+predicted_truth = tf.reshape(outputs, [-1])
+bc_loss = 1056 * tf.keras.losses.binary_crossentropy(base_truth, predicted_truth)
+kl_loss = (-0.5) * tf.math.reduce_mean((1 + z_log_var - tf.math.square(z_mean) - tf.math.exp(z_log_var)), axis = -1)
+total_loss = tf.math.reduce_mean(bc_loss, kl_loss)
+
+VAE.add_loss(total_loss)
+VAE.compile(optimizer = 'adam')
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+print("It works. It works. It works. It works. It works. It works.")
+print("It works. It works. It works. It works. It works. It works.")
+print("It works. It works. It works. It works. It works. It works.")
+print("It works. It works. It works. It works. It works. It works.")
 
 
