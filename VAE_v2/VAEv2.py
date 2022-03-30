@@ -125,7 +125,20 @@ total_loss = tf.math.reduce_mean(bc_loss, kl_loss)
 VAE.add_loss(total_loss)
 VAE.compile(optimizer = 'adam')
 
+# Load Manifest Data
+mf_file = open(traing_mf_name, "r")
+data = mf_file.read()
+training_manifest = data.split(" ")
+mf_file.close()
 
+mf_file = open(validation_mf_name, "r")
+data = mf_file.read()
+validation_manifest = data.split(" ")
+mf_file.close()
+
+# Manifest Sample Data Loading -- uses pipeline.py
+sample_data = load_manifest_rand(training_manifest, IMAGE_DIMENSIONS, 10)
+sample_data_v = load_manifest_rand(validation_manifest, IMAGE_DIMENSIONS, 10)
 
 
 
