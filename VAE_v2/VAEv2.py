@@ -152,6 +152,10 @@ def plot_step(plot_data, g, n, plot_i):
         g[offset + i].set_yticklabels([])
 	return 0
 
+# Returns a numpy array representing the predicted image
+def gen_sample(vae, input_ims):
+	result = VAE.predict(input_ims)
+	return results
 
 
 
