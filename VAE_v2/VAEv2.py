@@ -157,6 +157,37 @@ def gen_sample(vae, input_ims):
 	result = VAE.predict(input_ims)
 	return results
 
+# Plotting Configuration
+## Training
+epoch_plot_step = [i for i in range(0, max_epochs, max_epochs // num_rows_plot)]
+
+fig = plt.figure(figsize = (number_of_pics, num_rows_plot + 1))
+fig.set_size_inches(40, 40)
+
+nrows_ncols = (num_rows_plot + 1, number_of_pics)
+grid = ImageGrid(fig = fig, rect = 111, nrows_ncols = nrows_ncols, axes_pad = 0.1)
+grid[0].set_ylabel('BASE TRUTH')
+
+for i in range(number_of_pics):
+	grid[i].set_aspect('equal')
+	grid[i].imshow(sample_data[i], cmap = plt.cm.binary)
+	grid[i].set_xticklabels([])
+	grid[i].set_yticklabels([])
+
+## Verification 
+fig_v = plt.figure(figsize = (number_of_pics, num_rows_plot + 1))
+fig_v.set_size_inches(40, 40)
+
+grid_v = ImageGrid(fig = fig_v, rect = 111, nrows_ncols = nrows_ncols, axes_pad = 0.1)
+grid_v[0].set_ylabel('BASE TRUTH')
+
+for i in range(number_of_pics):
+	grid_v[i].set_aspect('equal')
+	grid_v[i].imshow(sample_data_v[i], cmap = plt.cm.binary)
+	grid_v[i].set_xticklabels([])
+	grid_v[i].set_yticklabels([])
+
+
 
 
 
