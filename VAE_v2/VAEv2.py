@@ -187,6 +187,20 @@ for i in range(number_of_pics):
 	grid_v[i].set_xticklabels([])
 	grid_v[i].set_yticklabels([])
 
+# Training Configuration < --- Change this function to callbacks
+checkpoint_path = "model/model.ckpt"
+
+plot_iter = 0
+plot_data = np.empty((0, number_of_pics) + IMAGE_DIMENSIONS + (3,))
+plot_data_v = np.empty((0, number_of_pics) + IMAGE_DIMENSIONS + (3,))
+plot_reshape = (-1, number_of_pics) + IMAGE_DIMENSIONS + (3,)
+
+if reload_previous:
+	plot_data = np.load("training_plot_data_checkpoint.npy")
+	plot_data_v = np.load("validation_plot_data_checkpoint.npy")
+	VAE.load_weights(checkpoint_path)
+	print("Loaded Last Checkpoint for VAE")
+
 
 
 
