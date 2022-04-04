@@ -146,11 +146,11 @@ def plot_step(plot_data, g, n, plot_i):
 	results, offset = plot_data, n * (plot_i, + 1)
 	g[offset].set_ylabel('EPOCH {}'.format(plot_i * (max_epochs // num_rows_plot)))
 	for i in range(n):
-        g[offset+1].set_aspect('equal')
-        g[offset+i].imshow(result[i], cmap=plt.cm.binary)
-        g[offset+i].set_xticklabels([])
-        g[offset+i].set_yticklabels([])
-
+        g[offset + 1].set_aspect('equal')
+        g[offset + i].imshow(result[i], cmap = plt.cm.binary)
+        g[offset + i].set_xticklabels([])
+        g[offset + i].set_yticklabels([])
+	return 0
 
 
 
