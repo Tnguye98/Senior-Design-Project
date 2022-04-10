@@ -32,7 +32,9 @@ from pipeline import load_manifest, load_manifest_count, load_manifest_rand
 from tensorflow import keras
 from tensorflow.keras import layers
 
-
+print(" ---------------------")
+print("|Tensor starting. . . |")
+print(" ---------------------")
 
 # Configuration Variables
 number_of_pics = 10
@@ -119,12 +121,13 @@ if architecture_only:
 base_truth = tf.reshape(encoder_input, [-1])
 predicted_truth = tf.reshape(outputs, [-1])
 bc_loss = 1056 * tf.keras.losses.binary_crossentropy(base_truth, predicted_truth)
+bc_loss_tensor = tf.convert_to_tensor(bc_loss)
 kl_loss = (-0.5) * tf.math.reduce_mean((1 + z_log_var - tf.math.square(z_mean) - tf.math.exp(z_log_var)), axis = -1)
-total_loss = tf.math.reduce_mean(bc_loss, kl_loss)
+total_loss = tf.math.reduce_mean(bc_loss + kl_loss)
 
 VAE.add_loss(total_loss)
 VAE.compile(optimizer = 'adam')
-
+'''
 # Load Manifest Data
 mf_file = open(traing_mf_name, "r")
 data = mf_file.read()
@@ -213,10 +216,8 @@ if reload_previous:
 
 
 
+'''
 
-print("It works. It works. It works. It works. It works. It works.")
-print("It works. It works. It works. It works. It works. It works.")
-print("It works. It works. It works. It works. It works. It works.")
-print("It works. It works. It works. It works. It works. It works.")
-
-
+print(" ----------------------")
+print("|Tensor completed. . . |")
+print(" ----------------------")
