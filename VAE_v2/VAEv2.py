@@ -14,7 +14,7 @@ import gc
 import os
 
 from mpl_toolkits.axes_grid1 import ImageGrid
-from pipeline import load_manifest, load_manifest_count, load_manifest_rand
+# from pipeline import load_manifest, load_manifest_count, load_manifest_rand
 from tensorflow import keras
 from tensorflow.keras import layers
 
@@ -34,22 +34,6 @@ LATENT_DIM = 512
 HIDDEN_LAYER_DIM = 2048
 IMAGE_DIMENSIONS = (512, 512)
 input_shape = IMAGE_DIMENSIONS + (3,)
-
-
-# Command line argument
-architecture_only = False
-reload_previous = False
-start_at_epoch = 0
-if (len(sys.argv) > 1):
-	# If arch
-	if (sys.argv[1] == "-a" or sys.argv[1] == "--arch"):
-		architecture_only = True
-		print("Only Displaying Architecture - Model will not be run!")
-	# If load
-	if (sys.argv[1] == "-l" or sys.argv[1] == "--load"):
-		reload_previous = True
-		start_at_epoch = int(sys.argv[2])
-		print("Restarting Model at Epoch: " + str(start_at_epoch))
 
 # Sampling function
 def sampling(args):
@@ -99,10 +83,7 @@ z = encoder(encoder_input)
 outputs = decoder(z)
 
 VAE = tf.keras.Model(inputs = encoder_input, outputs = outputs, name = "VAE")
-# VAE.summary()
-
-if architecture_only:
-	exit()
+VAE.summary()
 
 base_truth = tf.reshape(encoder_input, [-1])
 predicted_truth = tf.reshape(outputs, [-1])
