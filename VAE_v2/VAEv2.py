@@ -4,21 +4,7 @@ Requires proper manifest and the 'model' folder
 
 File Usage:
 
-	python vae.py [args]
-
-	Command Line Args:
-		--load [int],     -l [int]			
-			Loads checkpoint model and start at a specified epcoh
-		
-		--arch, 		  -a
-			Shown model architecture only, do not execute
-
-File Configuration: 
-	To properly configure this file, you may edit the configuration
-	and constant values.
-		VARIABLES			- Line 35
-		CONSTANTS			- Line 42
-
+	python vae.py 
 '''
 import tensorflow as tf
 import numpy as np
