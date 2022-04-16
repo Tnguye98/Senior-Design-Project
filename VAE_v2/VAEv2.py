@@ -85,6 +85,7 @@ outputs = decoder(z)
 VAE = tf.keras.Model(inputs = encoder_input, outputs = outputs, name = "VAE")
 VAE.summary()
 
+
 base_truth = tf.reshape(encoder_input, [-1])
 predicted_truth = tf.reshape(outputs, [-1])
 bc_loss = 1056 * tf.keras.losses.binary_crossentropy(base_truth, predicted_truth)
