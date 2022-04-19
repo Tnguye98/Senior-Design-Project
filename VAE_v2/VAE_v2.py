@@ -18,16 +18,16 @@ from tensorflow import keras
 from tensorflow.keras import layers
 
 print(" ---------------------")
-print("|Tensor starting. . . |")
+print("|VAE starting . . . . |")
 print(" ---------------------")
 
 # Configuration Variables
 number_of_pics = 10
 max_epochs = 10000
 num_rows_plots = 20
-traing_mf_name = "train.manifest"
-validation_mf_name = "val.manifest"
-train_dir = "../datasets"
+train_dir = "../datasets/train"
+test_dir = "../testDataset/test"
+checkpoint_path = "modelCheckpoint"
 
 # Constants Configuration
 LATENT_DIM = 512
@@ -36,12 +36,13 @@ IMAGE_DIMENSIONS = (512, 512)
 BATCH_SIZE = 32
 input_shape = IMAGE_DIMENSIONS + (3,)
 trainDataset = tf.keras.utils.image_dataset_from_directory(directory = train_dir, label_mode = "categorical", batch_size = BATCH_SIZE, image_size = IMG_SIZE)
-model_checkpoint = tf.keras.callbacks.ModelCheckpoint()
+testDataset = tf.keras.utils.image_dataset_from_directory(directory = test_dir, label_mode = "categorical", batch_size = BATCH_SIZE, image_size = IMG_SIZE)
+model_checkpoint = tf.keras.callbacks.ModelCheckpoint(filepath = checkpoint_path, save_freq = 100)
 
 # Sampling function
 def sampling(args):
 	z_mean, z_log_var = args
-	epsilon = tf.random.normal(shape = (tf.shape(z_mean)[0], LATENT_DIM), mean =0, stddev = 1.0)
+	epsilon = tf.random.normal(shape = (tf.shape(z_mean)[0], LATENT_DIM), mean = 0, stddev = 1.0)
 	return z_mean + tf.math.exp(z_log_var) * epsilon
 
 # Encoder 
@@ -99,8 +100,12 @@ total_loss = tf.math.reduce_mean(bc_loss + kl_loss)
 VAE.add_loss(total_loss)
 VAE.compile(optimizer = 'adam')
 
+history = VAE.fit(trainDataset, epochs = max_epochs, steps_per_epoch = len(training_data), validation_data = testDataset, validation_steps = len(trainDataset), callbacks = [model_checkpoint])
 
+encoder.save('model/VAE_encoder')
+decoder.save('model/VAE_decoder')
+vae.save('model/VAE_full')
 
 print(" ----------------------")
-print("|Tensor completed. . . |")
+print("|VAE Completed . . . . |")
 print(" ----------------------")
