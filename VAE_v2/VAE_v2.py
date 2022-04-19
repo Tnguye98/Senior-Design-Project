@@ -27,12 +27,16 @@ max_epochs = 10000
 num_rows_plots = 20
 traing_mf_name = "train.manifest"
 validation_mf_name = "val.manifest"
+train_dir = "../datasets"
 
 # Constants Configuration
 LATENT_DIM = 512
 HIDDEN_LAYER_DIM = 2048
 IMAGE_DIMENSIONS = (512, 512)
+BATCH_SIZE = 32
 input_shape = IMAGE_DIMENSIONS + (3,)
+trainDataset = tf.keras.utils.image_dataset_from_directory(directory = train_dir, label_mode = "categorical", batch_size = BATCH_SIZE, image_size = IMG_SIZE)
+model_checkpoint = tf.keras.callbacks.ModelCheckpoint()
 
 # Sampling function
 def sampling(args):
