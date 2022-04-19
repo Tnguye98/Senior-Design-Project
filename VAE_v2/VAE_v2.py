@@ -14,8 +14,7 @@ import gc
 import os
 
 from mpl_toolkits.axes_grid1 import ImageGrid
-from tensorflow import keras
-from tensorflow.keras import layers
+
 
 print(" ---------------------")
 print("|VAE starting . . . . |")
