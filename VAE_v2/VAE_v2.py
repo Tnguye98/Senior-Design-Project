@@ -28,6 +28,7 @@ num_rows_plots = 20
 traing_mf_name = "train.manifest"
 validation_mf_name = "val.manifest"
 train_dir = "../datasets"
+model_checkpoint_dir = ""
 
 # Constants Configuration
 LATENT_DIM = 512
