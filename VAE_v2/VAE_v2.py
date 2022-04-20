@@ -103,7 +103,7 @@ history = VAE.fit(trainDataset, epochs = max_epochs, steps_per_epoch = len(train
 
 encoder.save('model/VAE_encoder')
 decoder.save('model/VAE_decoder')
-vae.save('model/VAE_full')
+VAE.save('model/VAE_full')
 
 print(" ----------------------")
 print("|VAE Completed . . . . |")
