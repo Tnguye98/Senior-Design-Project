@@ -1,9 +1,10 @@
 import os
 import pathlib
 import matplotlib
-import matplotlib.pyplot as pathlib
 import numpy as np
 import tensorflow as tf
+import matplotlib.pyplot as pathlib
+
 
 train_dir = "../datasets/train"
 test_dir = "../datasets/val"
@@ -20,7 +21,7 @@ baseModel = tf.keras.applications.resnet_v2.ResNet101V2(include_top = False)
 inputs = tf.keras.layers.Input(shape = (512, 512, 3), name = 'input_layer')
 x = tf.keras.layers.experimental.preprocessing.Rescaling(1. / 512)(inputs)
 x = baseModel(x)
-x = layers.GlobalAveragePooling2D(name = "global_avg_pool_layer")(x)
+x = tf.keras.layers.GlobalAveragePooling2D(name = "global_avg_pool_layer")(x)
 outputs = tf.keras.layers.Dense(len(trainDataset.class_names), activation = 'softmax', name = 'output_layer')(x)
 model = tf.keras.Model(inputs, outputs)
 
@@ -29,3 +30,7 @@ model.compile(loss = 'sparse_categorical_crossentropy', optimizer = tf.keras.opt
 history = model.fit(trainDataset, epochs = max_epochs, steps_per_epoch = len(trainDataset), validation_data = testDataset, validation_steps = len(trainDataset), callbacks = [model_checkpoint])
 
 model.save('model/ObjectDetection')
+
+print(" ----------------------------------")
+print("|Image Detection Completed . . . . |")
+print(" ----------------------------------")
