@@ -4,7 +4,9 @@ import matplotlib
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as pathlib
+from tensorflow.keras import mixed_precision
 
+mixed_precision.set_global_policy("mixed_float16") 
 
 train_dir = "../datasets/train"
 test_dir = "../datasets/val"
